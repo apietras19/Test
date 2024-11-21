@@ -1,0 +1,78 @@
+---
+title: "Github test Practice"
+author: Adele Pietras
+date: "`r Sys.Date()`"
+output: 
+  rmdformats::readthedown:
+    highlight: haddock
+    toc_depth: 5
+    code_folding: hide
+    css:
+---
+
+```{r knitr_init, echo=TRUE, cache=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="150") # any output longer than 150 will be cutoff 
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE,
+               fig.path='GIS_maps/', dev = 'png')
+opts_knit$set(width=75)
+```
+
+# Github tutorial
+Notes and walkthrough are derived from this reference: https://happygitwithr.com/
+
+# What is Git?
+** Git saves one file but it saves all changes/versions of that file and it tracks them via person editing and time stamps them!**
+
+You can also add a commit for each change/upload of that file
+
+# What is Github?
+A repository for all your Git files. kinda like the cloud or Google drive.
+
+Even more useful for collaborating because any changes and uploads of the files can be tracked. This way everyone is up to date with the most recent version of the project
+
+## Why use this interface
+- Coding and data analysis work becomes organized and easy to trace
+- Collaboration!
+- Can create web presence for a project
+- Replicability and transparency
+
+#Getting github on R
+
+## Get github on PC
+First start up Git bash and run the following lines of code
+```{r, eval=FALSE}
+git config --global user.name "Adele Pietras"
+git config --global user.email "apietras19@ufl.edu"
+git config --global --list
+```
+
+## Get github on R
+Go to github.com/settings/tokens and generate a new token for your account.
+Make sure to select classic and click
+- repo
+- workflow
+- User
+
+Then run the code below which will prompt you to insert your token.
+```{r}
+#install.packages("usethis")
+library(usethis)
+
+gitcreds::gitcreds_set()
+```
+
+## Connect a repository to R
+Create a new repository on Github. Copy the URL. Then select "new project" in R and select version control
+
+From here you can select github and add the url and where you want the folder to be added to. In our case the folder/repository is called "Test"
+
