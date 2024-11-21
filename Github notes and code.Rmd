@@ -52,6 +52,7 @@ Even more useful for collaborating because any changes and uploads of the files 
 First start up Git bash and run the following lines of code
 ```{r, eval=FALSE}
 git config --global user.name "Adele Pietras"
+git config --global user.name "apietras19"
 git config --global user.email "apietras19@ufl.edu"
 git config --global --list
 ```
@@ -75,4 +76,47 @@ gitcreds::gitcreds_set()
 Create a new repository on Github. Copy the URL. Then select "new project" in R and select version control
 
 From here you can select github and add the url and where you want the folder to be added to. In our case the folder/repository is called "Test"
+
+# Data manipulation
+
+## Library load
+```{r}
+library(sf)
+```
+
+## Import Data
+```{r}
+cameras<-st_read("./Data/DeLuca_camera_traps.shp")
+roads<-st_read("./Data/Roads.shp")
+```
+
+## Plot data
+```{r}
+plot(st_geometry(cameras))
+plot(st_geometry(roads), add=T, col="red")
+```
+
+# Estimate distance to closest road for each camera
+```{r}
+# Create distance matrix
+distance<-st_distance(cameras, roads)
+
+# Find the minimum distance for each road
+Min.dist<-apply(distance,1,FUN = min)
+
+# Create a data frame with results
+results<-data.frame(cameras$Camera_sta,Min.dist)
+
+# The same for exporting data regarding relative paths
+write.csv(results, "./Results/Distance_roads1.csv")
+```
+
+## Export figure
+```{r}
+tiff ("./Results/fig.tif",units="in", width=5, height=5, res=300)
+plot(st_geometry(cameras))
+plot(st_geometry(roads), add=T, col="red")
+dev.off()
+```
+
 
